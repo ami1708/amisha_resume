@@ -1,7 +1,5 @@
 # Amisha Negi — Resume
 
-Live: https://amisha-resume.vercel.app (after Vercel import)
-
 ## Files
 - `resume.pdf` — the resume served at `/resume.pdf`
 - `resume.html` — editable source. Edit text here, then rebuild the PDF.
