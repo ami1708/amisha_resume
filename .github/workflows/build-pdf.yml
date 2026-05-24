@@ -1,0 +1,46 @@
+name: Build resume PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "resume.html"
+      - ".github/workflows/build-pdf.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Chromium
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
+
+      - name: Build PDF from resume.html
+        run: |
+          chromium-browser \
+            --headless --disable-gpu --no-sandbox --no-pdf-header-footer \
+            --print-to-pdf=resume.pdf \
+            "file://$(pwd)/resume.html"
+          ls -la resume.pdf
+
+      - name: Commit updated PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet resume.pdf; then
+            echo "No PDF changes."
+          else
+            git add resume.pdf
+            git commit -m "chore: rebuild resume.pdf [skip ci]"
+            git push
+          fi
