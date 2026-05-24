@@ -20,15 +20,14 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Chromium
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
 
       - name: Build PDF from resume.html
         run: |
-          chromium-browser \
-            --headless --disable-gpu --no-sandbox --no-pdf-header-footer \
+          chrome --headless --disable-gpu --no-sandbox --no-pdf-header-footer \
             --print-to-pdf=resume.pdf \
             "file://$(pwd)/resume.html"
           ls -la resume.pdf
