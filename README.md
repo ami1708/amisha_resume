@@ -8,7 +8,7 @@ Live: https://amisha-resume.vercel.app (after Vercel import)
 - `index.html` — landing page that embeds the PDF
 - `vercel.json` — Vercel config (clean URLs, inline PDF headers)
 
-## How to update content
+## How to update content 
 
 1. Edit `resume.html` in any editor.
 2. Rebuild the PDF:
